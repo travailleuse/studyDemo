@@ -1,0 +1,20 @@
+spring:
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+  application:
+    name: study
+  datasource:
+    url: jdbc:mysql://localhost:3306/study
+    username: root
+    password: root
+server:
+  port: 8080
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

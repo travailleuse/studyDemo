@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.csw.study.mapper.UserMapper">
+    <insert id="batchInsertUsers">
+        insert into user (id, name, email, birth_at, created_at, updated_at)
+        values
+        <foreach separator="," collection="users" item="user">
+            (#{user.id}, #{user.name}, #{user.email}, #{user.birthAt}, #{user.createdAt},
+            #{user.updatedAt})
+        </foreach>
+    </insert>
+    <insert id="insertUser">
+        insert into user (id, name, email, birth_at, created_at, updated_at)
+        values (#{user.id}, #{user.name},
+                #{user.email}, #{user.birthAt}, #{user.createdAt},
+                #{user.updatedAt});
+    </insert>
+    <update id="updateUser" parameterType="org.csw.study.param.UserParam">
+        update user
+        <set>
+            <if test="param.name != null and param.name != ''">
+                name=#{param.name},
+            </if>
+            <if test="param.email != null and param.email != ''">
+                email=#{param.email},
+            </if>
+            <if test="param.birthAt != null">
+                birth_at=#{param.birthAt}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findAllUsers" resultType="org.csw.study.entity.User">
+        select id,
+               name,
+               email,
+               birth_at,
+               created_at,
+               updated_at
+        from user;
+    </select>
+    <select id="findUserById" resultType="org.csw.study.entity.User">
+        select id,
+               name,
+               email,
+               birth_at,
+               created_at,
+               updated_at
+        from user
+        where id = #{id};
+    </select>
+</mapper>

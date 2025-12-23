@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.csw.study.mapper.OrderMapper">
+    <resultMap id="OrderWithUserMap" type="org.csw.study.entity.Order">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="address" property="address"/>
+        <result column="phone" property="phone"/>
+        <result column="create_at" property="createdAt"/>
+        <result column="update_at" property="updatedAt"/>
+        <association property="user" javaType="org.csw.study.entity.User">
+            <id column="user_id" property="id"/>
+            <result column="username" property="name"/>
+            <result column="birth_at" property="birthAt"/>
+            <result column="email" property="email"/>
+            <result column="user_create_at" property="createdAt"/>
+            <result column="user_update_at" property="updatedAt"/>
+        </association>
+    </resultMap>
+    <select id="findAllOrders" resultMap="OrderWithUserMap">
+        select o.id         as id,
+               o.name       as name,
+               o.address    as address,
+               o.phone      as phone,
+               o.creat_at   as create_at,
+               o.update_at  as update_at,
+               u.id         as user_id,
+               u.name       as username,
+               u.birth_at   as birth_at,
+               u.email      as email,
+               u.created_at as user_create_at,
+               u.updated_at as user_update_at
+        from `order` o
+                 left join
+             user u on o.user_id = u.id;
+    </select>
+</mapper>
